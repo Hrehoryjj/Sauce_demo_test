@@ -10,8 +10,8 @@
 
 | # | Step | Expected Result |
 |---|------|-----------------|
-| 1 | Insert valid Login | — |
-| 2 | Insert valid Password | — |
+| 1 | Insert valid Login | Login field is filled |
+| 2 | Insert valid Password | Password field is filled |
 | 3 | Click "Login" | Login successful, inventory page is displayed |
 
 ---
@@ -26,8 +26,8 @@
 
 | # | Step | Expected Result |
 |---|------|-----------------|
-| 1 | Insert invalid Login | — |
-| 2 | Insert invalid Password | — |
+| 1 | Insert invalid Login | Login field is filled |
+| 2 | Insert invalid Password | Password field is filled |
 | 3 | Click "Login" | Login unsuccessful, user remains on the Home page, error message: _"Epic sadface: Username and password do not match any user in this service"_ is displayed |
 
 ---
@@ -56,10 +56,10 @@
 
 | # | Step | Expected Result |
 |---|------|-----------------|
-| 1 | Click "Add to cart" on the first product | — |
-| 2 | Click the Cart button (top right corner) | — |
-| 3 | Click "Checkout" | — |
-| 4 | Fill in valid information | — |
+| 1 | Click "Add to cart" on the first product | Product is added, cart icon shows 1 item |
+| 2 | Click the Cart button (top right corner) | Cart page is displayed with the selected product |
+| 3 | Click "Checkout" | Redirected to `/checkout-step-one.html` |
+| 4 | Fill in valid information | All fields are filled correctly |
 | 5 | Click "Continue" | Redirected to `/checkout-step-two.html` |
 | 6 | Click "Finish" | Redirected to `/checkout-complete.html` |
 
@@ -77,11 +77,11 @@
 
 | # | Step | Expected Result |
 |---|------|-----------------|
-| 1 | Click "Add to cart" on the first three products | — |
-| 2 | Click the Cart button (top right corner) | — |
-| 3 | Click "Checkout" | — |
-| 4 | Fill in valid information | — |
-| 5 | Click "Continue" | — |
+| 1 | Click "Add to cart" on the first three products | Products are added, cart icon shows 3 items |
+| 2 | Click the Cart button (top right corner) | Cart page is displayed with 3 selected products |
+| 3 | Click "Checkout" | Redirected to `/checkout-step-one.html` |
+| 4 | Fill in valid information | All fields are filled correctly |
+| 5 | Click "Continue" | Redirected to `/checkout-step-two.html` |
 | 6 | Click "Finish" | Redirected to `/checkout-complete.html` |
 
 ---
@@ -98,10 +98,10 @@
 
 | # | Step | Expected Result |
 |---|------|-----------------|
-| 1 | Click "Add to cart" on the first product | — |
-| 2 | Click the Cart button (top right corner) | — |
-| 3 | Click "Checkout" | — |
-| 4 | Fill in invalid information | — |
+| 1 | Click "Add to cart" on the first product | Product is added, cart icon shows 1 item |
+| 2 | Click the Cart button (top right corner) | Cart page is displayed with the selected product |
+| 3 | Click "Checkout" | Redirected to `/checkout-step-one.html` |
+| 4 | Fill in invalid information | All fields are filled with invalid data |
 | 5 | Click "Continue" | Error message: _"Error: invalid information"_ is displayed |
 
 ---
@@ -118,10 +118,10 @@
 
 | # | Step | Expected Result |
 |---|------|-----------------|
-| 1 | Click "Add to cart" on the first product | — |
-| 2 | Click the Cart button (top right corner) | — |
-| 3 | Click "Checkout" | — |
-| 4 | Fill in whitespace data | — |
+| 1 | Click "Add to cart" on the first product | Product is added, cart icon shows 1 item |
+| 2 | Click the Cart button (top right corner) | Cart page is displayed with the selected product |
+| 3 | Click "Checkout" | Redirected to `/checkout-step-one.html` |
+| 4 | Fill in whitespace data | All fields are filled with whitespace |
 | 5 | Click "Continue" | Error message: _"Error: First Name is required"_ is displayed |
 
 ---
@@ -136,10 +136,10 @@
 
 | # | Step | Expected Result |
 |---|------|-----------------|
-| 1 | Click "Add to cart" on the first product | — |
-| 2 | Click the Cart button (top right corner) | — |
-| 3 | Click "Checkout" | — |
-| 4 | Leave all fields empty | — |
+| 1 | Click "Add to cart" on the first product | Product is added, cart icon shows 1 item |
+| 2 | Click the Cart button (top right corner) | Cart page is displayed with the selected product |
+| 3 | Click "Checkout" | Redirected to `/checkout-step-one.html` |
+| 4 | Leave all fields empty | All fields remain empty |
 | 5 | Click "Continue" | Error message: _"Error: First Name is required"_ is displayed |
 
 ---
@@ -156,5 +156,5 @@
 
 | # | Step | Expected Result |
 |---|------|-----------------|
-| 1 | Click the Cart button (top right corner) | Cart page is displayed, no products shown |
+| 1 | Click the Cart button (top right corner) | Cart page is displayed, no products are shown |
 | 2 | Click "Checkout" | User remains on the Cart page, error message: _"Cart is empty"_ is displayed |
