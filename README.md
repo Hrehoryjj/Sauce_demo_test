@@ -18,14 +18,11 @@ saucedemo-wdio/
 │   ├── pageobjects/
 │   │   ├── page.ts            # base page class
 │   │   ├── login.page.ts      # login page selectors & methods
-│   │   ├── inventory.page.ts  # inventory page selectors & methods
 │   │   ├── cart.page.ts       # cart page selectors & methods
 │   │   └── checkout.page.ts   # checkout page selectors & methods
 │   └── specs/
-│       ├── 01.login.spec.ts
-│       ├── 02.inventory.spec.ts
-│       ├── 03.cart.spec.ts
-│       └── 04.checkout.spec.ts
+│       ├── login.spec.ts
+│       └── checkout.spec.ts
 ├── TEST_CASES.md
 ├── wdio.conf.ts
 ├── tsconfig.json
@@ -52,7 +49,7 @@ npx wdio run wdio.conf.ts
 
 Run a specific spec file:
 ```bash
-npx wdio run wdio.conf.ts --spec ./test/specs/01.login.spec.ts
+npx wdio run wdio.conf.ts --spec ./test/specs/login.spec.ts
 ```
 
 ## Test Reports
@@ -79,5 +76,9 @@ See [TEST_CASES.md](./TEST_CASES.md) for the full list of test cases.
 | TC-09 | Checkout without products | Checkout |
 
 ## Known Bugs
+
+**TC-06:** The application accepts numbers as first and last name, and accepts a single character as a zip code — no validation error is shown and the user is able to proceed to the next step.
+
+**TC-07:** The application accepts whitespace (spacebar) as valid input in all checkout fields — no validation error is shown and the user is able to proceed to the next step.
 
 **TC-09:** The Checkout button on an empty cart does not display an error message — it proceeds to the next step instead. The test reflects the expected behaviour per the test case specification.
