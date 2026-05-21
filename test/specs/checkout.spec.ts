@@ -7,7 +7,6 @@ beforeEach(async () => {
     await browser.reloadSession(); 
     await loginPage.open();
     await loginPage.login('standard_user', 'secret_sauce');
-    await $('[data-test="inventory-container"]').waitForExist();
     });
 
 describe('checkout tests', () => {
