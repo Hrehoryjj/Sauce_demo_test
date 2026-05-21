@@ -1,8 +1,6 @@
-import { $ } from '@wdio/globals'
-import Page from './page.js';
+import page from './page.js';
 
-
-class LoginPage extends Page {
+class loginPage extends page {
     
     public get inputUsername () {
         return $('[data-test="username"]');
@@ -15,11 +13,15 @@ class LoginPage extends Page {
     public get btnSubmit () {
         return $('[data-test="login-button"]');
     }
+
+    public get errorMessage () {
+        return $('[data-test="error"]');
+    }
+
     public open () {
         return super.open('');
     }
 
-   
     public async login (username: string, password: string) {
         await this.inputUsername.setValue(username);
         await this.inputPassword.setValue(password);
@@ -28,4 +30,4 @@ class LoginPage extends Page {
     }
 }
 
-export default new LoginPage();
+export default new loginPage();

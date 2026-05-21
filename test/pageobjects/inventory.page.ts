@@ -1,28 +1,80 @@
+import page from './page.js';
 
-class InventoryPage {
-    public async addFirstItemToCart() {
-        await $('[data-test="add-to-cart-sauce-labs-backpack"]').scrollIntoView();
-        await $('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+class inventoryPage extends page {
+    public get sortDropdown() {
+        return $('[data-test="product-sort-container"]');
     }
-    public async addSecondItemToCart() {
-        await $('[data-test="add-to-cart-sauce-labs-bike-light"]').scrollIntoView();
-        await $('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
-    }   
-    public async addThirdItemToCart() {
-        await $('[data-test="add-to-cart-sauce-labs-bolt-t-shirt"]').scrollIntoView();
-        await $('[data-test="add-to-cart-sauce-labs-bolt-t-shirt"]').click();
+
+    public get burgerMenuButton() {
+        return $('#react-burger-menu-btn');
     }
-    public async addFourthItemToCart() {
-        await $('[data-test="add-to-cart-sauce-labs-fleece-jacket"]').scrollIntoView();
-        await $('[data-test="add-to-cart-sauce-labs-fleece-jacket"]').click();
+
+    public get logoutLink() {
+        return $('[data-test="logout-sidebar-link"]');
     }
-    public async addFifthItemToCart() {
-        await $('[data-test="add-to-cart-sauce-labs-onesie"]').scrollIntoView();
-        await $('[data-test="add-to-cart-sauce-labs-onesie"]').click();
+
+    public get twitterLink() {
+        return $('[data-test="social-twitter"]');
     }
-    public async addSixthItemToCart() {
-        await $('[data-test="add-to-cart-test.allthethings()-t-shirt-(red)"]').scrollIntoView();
-        await $('[data-test="add-to-cart-test.allthethings()-t-shirt-(red)"]').click();
+
+    public get facebookLink() {
+        return $('[data-test="social-facebook"]');
+    }
+
+    public get linkedinLink() {
+        return $('[data-test="social-linkedin"]');
+    }
+
+    public get cartItemName() {
+        return $('[data-test="inventory-item-name"]');
+    }
+
+    public getAddToCartButton(productName: string) {
+        return $(`[data-test="add-to-cart-sauce-labs-${productName}"]`);
+    }
+
+    public async sortBy(option: string) {
+        await this.sortDropdown.selectByVisibleText(option);
+    }
+
+     public async getProductNames(): Promise<string[]> {
+        const items = await $$('[data-test="inventory-item-name"]');
+        const itemsArray = Array.from(items);
+        return Promise.all(itemsArray.map(async (item) => await item.getText()));
+    }
+
+    public async getProductPrices(): Promise<number[]> {
+        const items = await $$('[data-test="inventory-item-price"]');
+        const itemsArray = Array.from(items);
+        const texts = await Promise.all(itemsArray.map(async (item) => await item.getText()));
+        return texts.map(t => parseFloat(t.replace('$', '')));
+    }
+
+    public async addItemToCart(productName: string) {
+        const button = await this.getAddToCartButton(productName);
+        await this.clickElement(button);
+    }
+
+    public async openBurgerMenu() {
+        await this.burgerMenuButton.click();
+    }
+
+    public async clickLogout() {
+        await this.logoutLink.waitForClickable();
+        await this.clickElement(this.logoutLink);
+    }
+
+    public async clickTwitter() {
+        await this.clickElement(this.twitterLink);
+    }
+
+    public async clickFacebook() {
+        await this.clickElement(this.facebookLink);
+    }
+
+    public async clickLinkedin() {
+        await this.clickElement(this.linkedinLink);
     }
 }
-export default new InventoryPage();
+
+export default new inventoryPage();

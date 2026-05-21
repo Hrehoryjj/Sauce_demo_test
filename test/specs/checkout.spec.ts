@@ -1,78 +1,76 @@
-import LoginPage from "../pageobjects/login.page.js";
-import CartPage from "../pageobjects/cart.page.js";
-import CheckoutPage from "../pageobjects/checkout.page.js";
+import loginPage from "../pageobjects/login.page.js";
 import inventoryPage from "../pageobjects/inventory.page.js";
+import cartPage from "../pageobjects/cart.page.js";
+import checkoutPage from "../pageobjects/checkout.page.js";
 
 beforeEach(async () => {
-    await LoginPage.open();
-    await LoginPage.login('standard_user', 'secret_sauce');
-});
+    await browser.reloadSession(); 
+    await loginPage.open();
+    await loginPage.login('standard_user', 'secret_sauce');
+    });
 
 describe('checkout tests', () => {
 
-    it('tc04 Checkout with product and valid information', async () => {
-        await inventoryPage.addFirstItemToCart();
-        await CartPage.cartPage();
-        await CheckoutPage.checkoutSubmit();
-        await CheckoutPage.checkout('tester', 'testerovic', '00001');
-        await CheckoutPage.checkoutFinish();
-        await expect(await browser.getUrl()).toContain('/checkout-complete.html');
+    it('tc08 Valid checkout with one product', async () => {
+        await inventoryPage.addItemToCart('backpack');
+        await cartPage.openCart();
+        await checkoutPage.checkoutSubmit();
+        await checkoutPage.checkout('Tester', 'Testerovic', '00001');
+        await checkoutPage.checkoutFinish();
+
+        const currentUrl = await checkoutPage.getCurrentUrl();
+        await expect(currentUrl).toContain('/checkout-complete.html');
     });
 
-    it('tc05 Checkout with product and valid information', async () => {
-        await inventoryPage.addFirstItemToCart();
-        await inventoryPage.addSecondItemToCart();
-        await inventoryPage.addThirdItemToCart();
-        await CartPage.cartPage();
-        await CheckoutPage.checkoutSubmit();
-        await CheckoutPage.checkout('tester', 'testerovic', '00001');
-        await CheckoutPage.checkoutFinish();
-        await expect(await browser.getUrl()).toContain('/checkout-complete.html');
+    it('tc09 Valid checkout with multiple products', async () => {
+        await inventoryPage.addItemToCart('backpack');
+        await inventoryPage.addItemToCart('bike-light');
+        await inventoryPage.addItemToCart('bolt-t-shirt');
+        await cartPage.openCart();
+        await checkoutPage.checkoutSubmit();
+        await checkoutPage.checkout('Tester', 'Testerovic', '00001');
+        await checkoutPage.checkoutFinish();
+
+        const currentUrl = await checkoutPage.getCurrentUrl();
+        await expect(currentUrl).toContain('/checkout-complete.html');
     });
 
-    it('tc06 Checkout with product and invalid information', async () => {
-        await inventoryPage.addFirstItemToCart();
-        await CartPage.cartPage();
-        await CheckoutPage.checkoutSubmit();
-        await CheckoutPage.checkout('111', '111', 'a');
-        await CheckoutPage.checkoutFinish();
-        const errorContainer = $('[data-test="error"]');
-        await expect(errorContainer).toHaveText(
-            expect.stringContaining('Invalid name and postal code')
+    it('tc10 Checkout with invalid information', async () => {
+        await inventoryPage.addItemToCart('backpack');
+        await cartPage.openCart();
+        await checkoutPage.checkoutSubmit();
+        await checkoutPage.checkout('111', '111', 'a');
+        await expect(checkoutPage.errorMessage).toHaveText(
+            expect.stringContaining('Error: invalid information')
         );
     });
 
-    it('tc07 Checkout with product and invalid information', async () => {
-        await inventoryPage.addFirstItemToCart();
-        await CartPage.cartPage();
-        await CheckoutPage.checkoutSubmit();
-        await CheckoutPage.checkout(' ', ' ', ' ');
-        await CheckoutPage.checkoutFinish();
-        const errorContainer = $('[data-test="error"]');
-        await expect(errorContainer).toHaveText(
+    it('tc11 Checkout with whitespace information', async () => {
+        await inventoryPage.addItemToCart('bike-light');
+        await cartPage.openCart();
+        await checkoutPage.checkoutSubmit();
+        await checkoutPage.checkout(' ', ' ', ' ');
+        await expect(checkoutPage.errorMessage).toHaveText(
             expect.stringContaining('Error: First Name is required')
         );
     });
 
-    it('tc08 Checkout with product and empty information', async () => {
-        await inventoryPage.addFirstItemToCart();
-        await CartPage.cartPage();
-        await CheckoutPage.checkoutSubmit();
-        await CheckoutPage.checkout('', '', '');
-        const errorContainer = $('[data-test="error"]');
-        await expect(errorContainer).toHaveText(
+    it('tc12 Checkout with empty information', async () => {
+        await inventoryPage.addItemToCart('backpack');
+        await cartPage.openCart();
+        await checkoutPage.checkoutSubmit();
+        await checkoutPage.checkout('', '', '');
+
+        await expect(checkoutPage.errorMessage).toHaveText(
             expect.stringContaining('Error: First Name is required')
         );
-    }); 
+    });
 
-    it('tc09 Checkout without products', async () => {
-        await CartPage.cartPage();
-        await CheckoutPage.checkoutSubmit();
-        await CheckoutPage.checkout('tester', 'testerovic', '00001');
-        await CheckoutPage.checkoutFinish();
-        const errorContainer = $('[data-test="error"]');
-        await expect(errorContainer).toHaveText(
-            expect.stringContaining('Error: Your cart is empty')
+    it('tc13 Checkout without products', async () => {
+        await cartPage.openCart();
+        await checkoutPage.checkoutSubmit();
+        await expect(checkoutPage.errorMessage).toHaveText(
+            expect.stringContaining('Cart is empty')
         );
     });
 });

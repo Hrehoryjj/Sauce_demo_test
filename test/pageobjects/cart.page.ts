@@ -1,9 +1,9 @@
-import Page from './page.js';
+import page from './page.js';
 
-class CartPage extends Page {
-    public async cartPage() {
+class cartPage extends page {
+    public async openCart() {
         await $('[data-test="shopping-cart-link"]').waitForClickable();
         await $('[data-test="shopping-cart-link"]').click();
     }
 }
-export default new CartPage();
+export default new cartPage();

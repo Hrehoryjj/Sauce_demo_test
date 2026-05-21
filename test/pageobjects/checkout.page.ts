@@ -1,39 +1,50 @@
-import Page from './page.js';
+import page from './page.js';
 
-class CheckoutPage extends Page {
-    public async checkoutSubmit() {
-        await $('[data-test="checkout"]').scrollIntoView();
-        await $('[data-test="checkout"]').click();
+class checkoutPage extends page {
+    public get btnCheckout() {
+        return $('[data-test="checkout"]');
     }
-    public get inputFirstName () {
-            return $('[data-test="firstName"]');
-        }
     
-        public get inputLastName () {
-            return $('[data-test="lastName"]');
-        }
-    
-        public get inputPostalCode () {
-            return $('[data-test="postalCode"]');
-        }
-    
-        public get btnSubmit () {
-            return $('[data-test="continue"]');
-        }
-          
-       
-        public async checkout (firstname: string, lastname: string, postalCode: string) {
-            await this.inputFirstName.setValue(firstname);
-            await this.inputLastName.setValue(lastname);
-            await this.inputPostalCode.setValue(postalCode);
-            await this.btnSubmit.scrollIntoView();
-            await this.btnSubmit.waitForClickable();
-            await this.btnSubmit.click();
-        }
+    public get inputFirstName() {
+        return $('[data-test="firstName"]');
+    }
 
-        public async checkoutFinish() {
-            await $('[data-test="finish"]').scrollIntoView();
-            await $('[data-test="finish"]').click();
-        }
+    public get inputLastName() {
+        return $('[data-test="lastName"]');
+    }
+
+    public get inputPostalCode() {
+        return $('[data-test="postalCode"]');
+    }
+
+    public get btnContinue() {
+        return $('[data-test="continue"]');
+    }
+
+    public get btnFinish() {
+        return $('[data-test="finish"]');
+    }
+
+    public get errorMessage() {
+        return $('[data-test="error"]');
+    }
+          
+    public async checkoutSubmit() {
+        await this.clickElement(this.btnCheckout);
+    }
+
+    public async checkout(firstname: string, lastname: string, postalCode: string) {
+        await this.inputFirstName.setValue(firstname);
+        await this.inputLastName.setValue(lastname);
+        await this.inputPostalCode.setValue(postalCode);
+        await this.btnContinue.scrollIntoView();
+        await this.btnContinue.waitForClickable();
+        await this.btnContinue.click();
+    }
+
+    public async checkoutFinish() {
+        await this.clickElement(this.btnFinish);
+    }
 }
-export default new CheckoutPage();
+
+export default new checkoutPage();
