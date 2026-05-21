@@ -4,10 +4,11 @@ import cartPage from "../pageobjects/cart.page.js";
 import checkoutPage from "../pageobjects/checkout.page.js";
 
 beforeEach(async () => {
-    await browser.reloadSession(); 
+    await browser.reloadSession();
     await loginPage.open();
+    await browser.execute(() => localStorage.clear());
     await loginPage.login('standard_user', 'secret_sauce');
-    });
+});
 
 describe('checkout tests', () => {
 
@@ -56,7 +57,7 @@ describe('checkout tests', () => {
     });
 
     it('tc12 Checkout with empty information', async () => {
-        await inventoryPage.addItemToCart('onesie');
+        await inventoryPage.addItemToCart('backpack');
         await cartPage.openCart();
         await checkoutPage.checkoutSubmit();
         await checkoutPage.checkout('', '', '');
