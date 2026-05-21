@@ -7,6 +7,7 @@ beforeEach(async () => {
     await browser.reloadSession(); 
     await loginPage.open();
     await loginPage.login('standard_user', 'secret_sauce');
+    await $('[data-test="inventory-container"]').waitForExist();
     });
 
 describe('checkout tests', () => {
@@ -56,7 +57,7 @@ describe('checkout tests', () => {
     });
 
     it('tc12 Checkout with empty information', async () => {
-        await inventoryPage.addItemToCart('backpack');
+        await inventoryPage.addItemToCart('onesie');
         await cartPage.openCart();
         await checkoutPage.checkoutSubmit();
         await checkoutPage.checkout('', '', '');

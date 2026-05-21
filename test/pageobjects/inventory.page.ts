@@ -51,7 +51,7 @@ class inventoryPage extends page {
     }
 
     public async addItemToCart(productName: string) {
-        const button = await this.getAddToCartButton(productName);
+        const button = this.getAddToCartButton(productName);
         await this.clickElement(button);
     }
 
