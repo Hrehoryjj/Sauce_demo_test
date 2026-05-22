@@ -60,34 +60,20 @@ describe('inventory and navigation tests', () => {
     });
 
         it('tc07 footer social links', async () => {
-        await loginPage.open();
-        await loginPage.login('standard_user', 'secret_sauce');
+    const twitterUrl = await inventoryPage.clickSocialLinkAndGetUrl(
+        () => inventoryPage.clickTwitter()
+    );
+    await expect(twitterUrl).toContain('x.com');
 
-        await inventoryPage.clickTwitter();
-        const twitterHandles = await browser.getWindowHandles();
-        await browser.switchToWindow(twitterHandles[1]);
-        const twitterUrl = await inventoryPage.getCurrentUrl();
-        await expect(twitterUrl).toContain('x.com');
-        await browser.closeWindow();
-        await browser.switchToWindow(twitterHandles[0]);
+    const facebookUrl = await inventoryPage.clickSocialLinkAndGetUrl(
+        () => inventoryPage.clickFacebook()
+    );
+    await expect(facebookUrl).toContain('facebook.com/saucelabs');
 
-        await inventoryPage.clickFacebook();
-        const facebookHandles = await browser.getWindowHandles();
-        await browser.switchToWindow(facebookHandles[1]);
-        const facebookUrl = await inventoryPage.getCurrentUrl();
-        await expect(facebookUrl).toContain('facebook.com/saucelabs');
-        await browser.closeWindow();
-        await browser.switchToWindow(facebookHandles[0]);
-
-        await inventoryPage.clickLinkedin();
-        const linkedinHandles = await browser.getWindowHandles();
-        await browser.switchToWindow(linkedinHandles[1]);
-        const linkedinUrl = await inventoryPage.getCurrentUrl();
-        await expect(linkedinUrl).toContain('linkedin.com');
-        await browser.closeWindow();
-        await browser.switchToWindow(linkedinHandles[0]);
-    });
-
-
+    const linkedinUrl = await inventoryPage.clickSocialLinkAndGetUrl(
+        () => inventoryPage.clickLinkedin()
+    );
+    await expect(linkedinUrl).toContain('linkedin.com');
+});
 
 });

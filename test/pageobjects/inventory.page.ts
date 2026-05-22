@@ -75,6 +75,15 @@ class inventoryPage extends page {
     public async clickLinkedin() {
         await this.clickElement(this.linkedinLink);
     }
+    public async clickSocialLinkAndGetUrl(linkMethod: () => Promise<void>): Promise<string> {
+    await linkMethod();
+    const handles = await browser.getWindowHandles();
+    await browser.switchToWindow(handles[1]);
+    const url = await browser.getUrl();
+    await browser.closeWindow();
+    await browser.switchToWindow(handles[0]);
+    return url;
+}
 }
 
 export default new inventoryPage();
